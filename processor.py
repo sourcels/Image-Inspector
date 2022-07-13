@@ -3,7 +3,7 @@ from PIL import Image, ImageFilter, ImageEnhance
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 
-class Processor():
+class Processor:
     def __init__(self, image_picture):
         self.image = None
         self.dir = None

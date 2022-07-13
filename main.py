@@ -1,8 +1,5 @@
 import os
-from PIL import Image, ImageFilter, ImageEnhance
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout, QPushButton, QMessageBox, QHBoxLayout, QListWidget, QFileDialog
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout, QPushButton, QHBoxLayout, QListWidget, QFileDialog
 
 from processor import Processor            
 
@@ -25,10 +22,12 @@ h2 = QHBoxLayout()
 h3 = QHBoxLayout()
 v1 = QVBoxLayout()
 v2 = QVBoxLayout()
+
 h1.addLayout(v1)
 h1.addLayout(v2)
 v2.addLayout(h2)
 v2.addLayout(h3)
+
 v1.addWidget(image_folder)
 v1.addWidget(image_folder_list)
 h2.addWidget(image_picture)
@@ -38,10 +37,11 @@ h3.addWidget(image_mirror)
 h3.addWidget(image_enhance)
 h3.addWidget(image_bandw)
 h3.addWidget(image_blur)
+
 image_main.setLayout(h1)
 
-image_workdir = ''
-def filter(files,image_extensions):
+image_workdir = None
+def filter(files, image_extensions):
     result = []
     for filename in files:
         for ext in image_extensions:
