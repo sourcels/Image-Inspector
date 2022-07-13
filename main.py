@@ -7,14 +7,17 @@ image_app = QApplication([])
 image_main = QWidget()
 image_main.resize(700, 500) 
 
-image_folder = QPushButton('Папка')
-image_left90 = QPushButton('Лево')
-image_right90 = QPushButton('Право')
-image_mirror = QPushButton('Зеркально')
-image_enhance = QPushButton('Резкость')
-image_bandw = QPushButton('Ч/Б')
-image_blur = QPushButton('Размытие')
-image_picture = QLabel('Image may be here')
+image_folder = QPushButton('Choose Folder')
+image_left90 = QPushButton('Left')
+image_right90 = QPushButton('Right')
+image_mirror = QPushButton('Mirror')
+image_enhance = QPushButton('Enhance')
+image_bandw = QPushButton('B/W')
+image_blur = QPushButton('Blur')
+image_save = QPushButton('Save image')
+
+image_picture = QLabel('Image may be here...')
+
 image_folder_list = QListWidget()
 
 h1 = QHBoxLayout()
@@ -37,6 +40,7 @@ h3.addWidget(image_mirror)
 h3.addWidget(image_enhance)
 h3.addWidget(image_bandw)
 h3.addWidget(image_blur)
+h3.addWidget(image_save)
 
 image_main.setLayout(h1)
 
@@ -72,13 +76,18 @@ def showImage():
     wandImage.image_show(image_path)
 
 wandImage = Processor(image_picture)
+
 image_folder_list.currentRowChanged.connect(showImage)
+
 image_mirror.clicked.connect(wandImage.mirror)
 image_left90.clicked.connect(wandImage.left_90)
 image_right90.clicked.connect(wandImage.right_90)
 image_enhance.clicked.connect(wandImage.enhance)
 image_bandw.clicked.connect(wandImage.bandw)
 image_blur.clicked.connect(wandImage.blur)
+image_save.clicked.connect(wandImage.saveImage)
+
+image_app.aboutToQuit.connect(wandImage.delete_temp)
 
 image_main.show()
 image_app.exec_()
