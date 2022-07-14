@@ -1,5 +1,5 @@
 import os
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout, QPushButton, QHBoxLayout, QListWidget, QFileDialog
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QListWidget, QMessageBox, QInputDialog, QHBoxLayout, QVBoxLayout, QFileDialog
 
 from processor import Processor            
 
@@ -19,6 +19,10 @@ image_save = QPushButton('Save image')
 image_picture = QLabel('Image may be here...')
 
 image_folder_list = QListWidget()
+
+image_message = QMessageBox()
+
+image_input = QInputDialog()
 
 h1 = QHBoxLayout()
 h2 = QHBoxLayout()
@@ -57,6 +61,16 @@ def chooseWorkdir():
     global image_workdir
     image_workdir = QFileDialog.getExistingDirectory()
 
+def buttons_hide(param):
+    image_blur.setHidden(param)
+    image_left90.setHidden(param)
+    image_right90.setHidden(param)
+    image_mirror.setHidden(param)
+    image_enhance.setHidden(param)
+    image_bandw.setHidden(param)
+    image_blur.setHidden(param)
+    image_save.setHidden(param)
+
 def showFilenamesList():
     image_extensions = ['.jpg','.jpeg','.png','.gif','.tif','.tiff','.bmp','.dib','.webp']
     chooseWorkdir()
@@ -67,18 +81,20 @@ def showFilenamesList():
             image_folder_list.addItem(filename)
     except:
         pass
-image_folder.clicked.connect(showFilenamesList)
+
 
 def showImage():
     filename = image_folder_list.currentItem().text()
     wandImage.image_load(image_workdir, filename)
     image_path = os.path.join(wandImage.dir, wandImage.filename)
     wandImage.image_show(image_path)
+    buttons_hide(False)
 
-wandImage = Processor(image_picture)
+wandImage = Processor(image_picture, image_message, image_input)
 
 image_folder_list.currentRowChanged.connect(showImage)
 
+image_folder.clicked.connect(showFilenamesList)
 image_mirror.clicked.connect(wandImage.mirror)
 image_left90.clicked.connect(wandImage.left_90)
 image_right90.clicked.connect(wandImage.right_90)
@@ -88,6 +104,8 @@ image_blur.clicked.connect(wandImage.blur)
 image_save.clicked.connect(wandImage.saveImage)
 
 image_app.aboutToQuit.connect(wandImage.delete_temp)
+
+buttons_hide(True)
 
 image_main.show()
 image_app.exec_()

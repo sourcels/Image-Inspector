@@ -6,11 +6,13 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 
 class Processor:
-    def __init__(self, image_picture):
+    def __init__(self, image_picture, image_message, image_input):
         self.image = None
         self.dir = None
         self.filename = None
         self.image_picture = image_picture
+        self.image_message = image_message
+        self.image_input = image_input
         self.temp_dir = f'.tmp{randint(100001, 999998)}/'
         self.save_dir = 'Modified Images/'
 
@@ -48,6 +50,7 @@ class Processor:
         self.image_show(image_path)
 
     def enhance(self):
+        self.image_input.exec_()
         self.image = ImageEnhance.Contrast(self.image)
         self.image = self.image.enhance(1.5)
         self.loader()
@@ -72,6 +75,9 @@ class Processor:
             os.mkdir(path)
         image_path = os.path.join(path, self.filename)
         self.image.save(image_path)
+        self.image_message.setWindowTitle("Successfull!")
+        self.image_message.setText("Your image saved successfully!")
+        self.image_message.exec_()
 
     def loader(self):
         path = os.path.join(self.dir, self.temp_dir)
