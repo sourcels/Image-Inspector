@@ -51,8 +51,9 @@ class Processor:
 
     def enhance(self):
         self.image_input.exec_()
+        a = self.image_input.getInt(None, "integer input dualog","enter a number")
         self.image = ImageEnhance.Contrast(self.image)
-        self.image = self.image.enhance(1.5)
+        self.image = self.image.enhance(a)
         self.loader()
         image_path = os.path.join(self.dir, self.temp_dir, self.filename)
         self.image_show(image_path)

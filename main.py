@@ -62,17 +62,17 @@ def chooseWorkdir():
     image_workdir = QFileDialog.getExistingDirectory()
 
 def buttons_hide(param):
-    image_blur.setHidden(param)
-    image_left90.setHidden(param)
-    image_right90.setHidden(param)
-    image_mirror.setHidden(param)
-    image_enhance.setHidden(param)
-    image_bandw.setHidden(param)
-    image_blur.setHidden(param)
-    image_save.setHidden(param)
+    image_blur.setEnabled(param)
+    image_left90.setEnabled(param)
+    image_right90.setEnabled(param)
+    image_mirror.setEnabled(param)
+    image_enhance.setEnabled(param)
+    image_bandw.setEnabled(param)
+    image_blur.setEnabled(param)
+    image_save.setEnabled(param)
 
 def showFilenamesList():
-    image_extensions = ['.jpg','.jpeg','.png','.gif','.tif','.tiff','.bmp','.dib','.webp']
+    image_extensions = ['.jpg', '.jpeg', '.png', '.tif', '.tiff', '.bmp', '.dib', '.webp']
     chooseWorkdir()
     try:
         filenames = filter(os.listdir(image_workdir), image_extensions)
@@ -88,7 +88,7 @@ def showImage():
     wandImage.image_load(image_workdir, filename)
     image_path = os.path.join(wandImage.dir, wandImage.filename)
     wandImage.image_show(image_path)
-    buttons_hide(False)
+    buttons_hide(True)
 
 wandImage = Processor(image_picture, image_message, image_input)
 
@@ -105,7 +105,7 @@ image_save.clicked.connect(wandImage.saveImage)
 
 image_app.aboutToQuit.connect(wandImage.delete_temp)
 
-buttons_hide(True)
+buttons_hide(False)
 
 image_main.show()
 image_app.exec_()
