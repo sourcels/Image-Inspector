@@ -4,6 +4,8 @@ from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QListWid
 from processor import Processor            
 
 image_app = QApplication([])
+image_app.setApplicationName("Image Inspector")
+
 image_main = QWidget()
 image_main.resize(700, 500) 
 
@@ -50,7 +52,7 @@ image_main.setLayout(h1)
 
 image_workdir = None
 def filter(files, image_extensions):
-    result = []
+    result = list()
     for filename in files:
         for ext in image_extensions:
             if filename.endswith(ext):
